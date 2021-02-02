@@ -46,8 +46,7 @@ namespace ReadingRoomStore.Migrations
             modelBuilder.Entity("ReadingRoomStore.Models.Donator", b =>
                 {
                     b.Property<string>("DonatorId")
-                        .HasColumnType("nvarchar(450)")
-                        .UseIdentityColumn();
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DonatorPassword")
                         .HasColumnType("nvarchar(max)");
@@ -58,20 +57,6 @@ namespace ReadingRoomStore.Migrations
                     b.HasKey("DonatorId");
 
                     b.ToTable("Donators");
-                });
-
-            modelBuilder.Entity("ReadingRoomStore.Models.test", b =>
-                {
-                    b.Property<string>("testId")
-                        .HasColumnType("nvarchar(450)")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("MyProperty")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("testId");
-
-                    b.ToTable("Tests");
                 });
 #pragma warning restore 612, 618
         }
