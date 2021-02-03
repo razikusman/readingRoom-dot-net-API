@@ -31,27 +31,41 @@ namespace ReadingRoomStore.Handler
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
 
-            if(!Request.Headers.ContainsKey("Autherization"))
-                return AuthenticateResult.Fail("Not Found");
+            if(!Request.Headers.ContainsKey("Authorization"))
+                return AuthenticateResult.Fail("Authorization header Not Found");
+
+            ///Donator donator1 = null;
+            //var authenticationHeaderValue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+            //var bytes = Convert.FromBase64String(authenticationHeaderValue.Parameter);
+            //var credentials = Encoding.UTF8.GetString(bytes).Split(new[] { ':' }, 2);
+            //string id = credentials[0];
+            //string password = credentials[1];
 
             try
             {
-                var authenticationHeaderValue = AuthenticationHeaderValue.Parse(Request.Headers["Autherization"]);
+                var authenticationHeaderValue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
                 var bytes = Convert.FromBase64String(authenticationHeaderValue.Parameter);
-                String[] credentials = Encoding.UTF8.GetString(bytes).Split(":");
-                String id = credentials[0];
+                var bytecredentials = Encoding.UTF8.GetString(bytes);
+                string[] credentials = bytecredentials.Split(":");
+                string id = credentials[0];
+                string password = credentials[1];
 
 
-                Donator donator = _context.Donators.Where(donator => donator.DonatorUserEmail == id).FirstOrDefault();
+                Donator donator = _context.Donators.Where(donator => donator.DonatorId == id && donator.DonatorPassword == password).FirstOrDefault();
 
-                if(donator == null)
-                    AuthenticateResult.Fail("invalid");
+                if (donator == null)
+                {
+                    AuthenticateResult.Fail("invalid user");
+                }
+                    
                 else
                 {
-                    var claims = new[] { new Claim(ClaimTypes.Name, donator.DonatorUserEmail) };
+                    var claims = new[] { new Claim(ClaimTypes.Name, donator.DonatorId) };
                     var identity = new ClaimsIdentity(claims, Scheme.Name);
                     var principle = new ClaimsPrincipal(identity);
                     var ticket = new AuthenticationTicket(principle, Scheme.Name);
+
+                   return AuthenticateResult.Success(ticket);
                 }
             }
             catch (Exception)
@@ -60,9 +74,9 @@ namespace ReadingRoomStore.Handler
                 return AuthenticateResult.Fail("error occured");
             }
 
-            
 
-            return AuthenticateResult.Fail("failed to Authenticate");
+
+            return AuthenticateResult.Fail("need to implement");
         }
     }
 }

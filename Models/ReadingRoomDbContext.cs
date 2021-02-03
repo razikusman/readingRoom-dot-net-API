@@ -41,10 +41,10 @@ namespace ReadingRoomStore.Models
                 entity.ToTable("books");
             });
 
-            //modelBuilder.Entity<Donator>(entity =>
-            //{
-            //    entity.ToTable("Donators");
-            //});
+            modelBuilder.Entity<Donator>(entity =>
+            {
+                entity.ToTable("Donators");
+            });
 
             //modelBuilder.Entity<test>(entity =>
             //{

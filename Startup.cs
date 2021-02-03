@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ReadingRoomStore.Handler;
 using ReadingRoomStore.Models;
 
@@ -31,6 +32,10 @@ namespace ReadingRoomStore
         {
             services.AddControllers();
 
+            //Autherization class add
+            services.AddAuthentication("StoreDonorsAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, StoreDonorsAuthenticationHandler>("StoreDonorsAuthentication", null);
+
             // add ConnectionSTring
             services.AddDbContext<ReadingRoomDBContext>(option =>
                 option.UseSqlServer(Configuration.GetConnectionString("ReadingRoomDB")));
@@ -41,9 +46,9 @@ namespace ReadingRoomStore
                 gen.SwaggerDoc("v1.0", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "ReadingRoomStore Api", Version = "v1.0" });
             });
 
-            //Autherization class add
-            services.AddAuthentication("StoreDonorsAuthentication")
-                .AddScheme<AuthenticationSchemeOptions, StoreDonorsAuthenticationHandler>("StoreDonorsAuthentication", null);
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +64,7 @@ namespace ReadingRoomStore
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseSwagger();

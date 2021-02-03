@@ -84,6 +84,11 @@ E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\runtimes\win-arm\native\e_sqlite3.dl
 E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\e_sqlite3.dll
 E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\e_sqlite3.dll
 E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
+E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\System.Text.Encodings.Web.dll
+E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\runtimes\linux-mips64\native\libe_sqlite3.so
+E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 E:\ReadingRoomStore\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll

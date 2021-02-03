@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using ReadingRoomStore.Models;
 
 namespace ReadingRoomStore.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DonatorsController : ControllerBase
@@ -20,6 +22,7 @@ namespace ReadingRoomStore.Controllers
             _context = context;
         }
 
+        //get all
         // GET: api/Donators
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Donator>>> GetDonators()
@@ -27,6 +30,7 @@ namespace ReadingRoomStore.Controllers
             return await _context.Donators.ToListAsync();
         }
 
+        //get by id
         // GET: api/Donators/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Donator>> GetDonator(string id)
@@ -39,6 +43,49 @@ namespace ReadingRoomStore.Controllers
             }
 
             return donator;
+        }
+
+        //get by id
+        // GET: api/GetDonatordetails/5
+        [HttpGet("GetDonatordetails/{id}")]
+        public async Task<ActionResult<Donator>> GetDonatordetails(string id)
+        {
+            var donator =  _context.Donators
+                                        .Where(don => don.DonatorId == id)
+                                        .FirstOrDefault();
+
+            if (donator == null)
+            {
+                return NotFound();
+            }
+
+            return donator;
+        }
+
+        //get by id
+        // GET: api/GetDonatordetail
+        [HttpGet("GetDonatordetail")]
+        //public async Task<ActionResult<Donator>> GetDonatordetail(string id , string password)
+        public async Task<ActionResult<Donator>> GetDonatordetail()
+        {
+
+            //var donator = await _context.Donators
+            //                            .Where(don => don.DonatorId == id && don.DonatorPassword == password)
+            //                            .FirstOrDefaultAsync();
+
+            string id = HttpContext.User.Identity.Name;
+            var donator = await _context.Donators
+                                        .Where(don => don.DonatorId == id)
+                                        .FirstOrDefaultAsync();
+
+            //donator.DonatorPassword = null;
+
+            if (donator == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(donator);
         }
 
         // PUT: api/Donators/5
